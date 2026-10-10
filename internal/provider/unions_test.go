@@ -77,10 +77,6 @@ func validateVariants(t *testing.T, s schema.Schema, config tfsdk.Config) bool {
 	ctx := context.Background()
 	options := s.Attributes["options"].(schema.SingleNestedAttribute)
 
-	// Read the variant values straight off the raw config. GetAttribute cannot
-	// be used here: the generator gives every variant its own custom type
-	// (AthenaType and friends), which does not reflect into a plain
-	// types.Object.
 	var top map[string]tftypes.Value
 	if err := config.Raw.As(&top); err != nil {
 		t.Fatalf("reading config: %v", err)

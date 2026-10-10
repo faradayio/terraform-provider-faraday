@@ -3,8 +3,9 @@
 package provider
 
 type attrPerms struct {
-	create map[string]struct{}
-	update map[string]struct{}
+	create           map[string]struct{}
+	update           map[string]struct{}
+	requiredAtCreate []requiredSecret
 }
 
 // resourcePerms records, per resource, which attributes a create may
@@ -12,57 +13,73 @@ type attrPerms struct {
 // express the difference, but the API enforces it: a field that is
 // mutable but not initializable is rejected on POST, and one that is
 // initializable but not mutable is rejected on PATCH.
+//
+// requiredAtCreate lists the secrets a create must supply. They are
+// optional in the schema because an import can never supply them.
 var resourcePerms = map[string]attrPerms{
 	"atlas": {
-		create: map[string]struct{}{"connection_id": {}, "name": {}, "options": {}, "output_to_locations": {}},
-		update: map[string]struct{}{"name": {}, "options": {}, "output_to_locations": {}},
+		create:           map[string]struct{}{"connection_id": {}, "name": {}, "options": {}, "output_to_locations": {}},
+		update:           map[string]struct{}{"name": {}, "options": {}, "output_to_locations": {}},
+		requiredAtCreate: nil,
 	},
 	"cohort": {
-		create: map[string]struct{}{"attributes": {}, "explore": {}, "location_conditions": {}, "max_count": {}, "max_value": {}, "min_count": {}, "min_value": {}, "name": {}, "place_conditions": {}, "recency": {}, "stream_conditions": {}, "stream_name": {}, "traits": {}},
-		update: map[string]struct{}{"attributes": {}, "explore": {}, "location_conditions": {}, "max_count": {}, "max_value": {}, "min_count": {}, "min_value": {}, "name": {}, "place_conditions": {}, "recency": {}, "stream_conditions": {}, "stream_name": {}, "traits": {}},
+		create:           map[string]struct{}{"attributes": {}, "explore": {}, "location_conditions": {}, "max_count": {}, "max_value": {}, "min_count": {}, "min_value": {}, "name": {}, "place_conditions": {}, "recency": {}, "stream_conditions": {}, "stream_name": {}, "traits": {}},
+		update:           map[string]struct{}{"attributes": {}, "explore": {}, "location_conditions": {}, "max_count": {}, "max_value": {}, "min_count": {}, "min_value": {}, "name": {}, "place_conditions": {}, "recency": {}, "stream_conditions": {}, "stream_name": {}, "traits": {}},
+		requiredAtCreate: nil,
 	},
 	"connection": {
-		create: map[string]struct{}{"name": {}, "options": {}},
-		update: map[string]struct{}{"name": {}, "options": {}},
+		create:           map[string]struct{}{"name": {}, "options": {}},
+		update:           map[string]struct{}{"name": {}, "options": {}},
+		requiredAtCreate: []requiredSecret{{"options", "aws_aurora_mysql", "password"}, {"options", "aws_aurora_postgres", "password"}, {"options", "aws_rds_mysql", "password"}, {"options", "aws_rds_postgres", "password"}, {"options", "aws_rds_sql_server", "password"}, {"options", "aws_redshift_serverless", "password"}, {"options", "azure_sql_server", "password"}, {"options", "databricks", "token"}, {"options", "databricks_delta_sharing", "credentials_json"}, {"options", "gcp_cloud_sql_mysql", "password"}, {"options", "gcp_cloud_sql_postgres", "password"}, {"options", "gcp_cloud_sql_sql_server", "password"}, {"options", "klaviyo", "private_api_key"}, {"options", "motherduck", "token"}, {"options", "mysql", "password"}, {"options", "postgres", "password"}, {"options", "recharge", "api_key"}, {"options", "redshift", "password"}, {"options", "salesforce_marketing_cloud", "client_secret"}, {"options", "segment", "api_key"}, {"options", "sql_server", "password"}, {"options", "the_trade_desk", "api_key"}},
 	},
 	"dataset": {
-		create: map[string]struct{}{"connection_id": {}, "identity_providers": {}, "identity_sets": {}, "incremental_column": {}, "name": {}, "options": {}, "output_to_authority": {}, "output_to_streams": {}, "output_to_streams_array": {}, "output_to_traits": {}, "preview": {}, "privacy": {}, "reference_key_column": {}, "reference_key_columns": {}, "upsert_columns": {}},
-		update: map[string]struct{}{"identity_providers": {}, "identity_sets": {}, "incremental_column": {}, "name": {}, "options": {}, "output_all_columns_as_traits": {}, "output_to_authority": {}, "output_to_streams": {}, "output_to_streams_array": {}, "output_to_traits": {}, "preview": {}, "privacy": {}, "reference_key_column": {}, "reference_key_columns": {}, "upsert_columns": {}},
+		create:           map[string]struct{}{"connection_id": {}, "identity_providers": {}, "identity_sets": {}, "incremental_column": {}, "name": {}, "options": {}, "output_to_authority": {}, "output_to_streams": {}, "output_to_streams_array": {}, "output_to_traits": {}, "preview": {}, "privacy": {}, "reference_key_column": {}, "reference_key_columns": {}, "upsert_columns": {}},
+		update:           map[string]struct{}{"identity_providers": {}, "identity_sets": {}, "incremental_column": {}, "name": {}, "options": {}, "output_all_columns_as_traits": {}, "output_to_authority": {}, "output_to_streams": {}, "output_to_streams_array": {}, "output_to_traits": {}, "preview": {}, "privacy": {}, "reference_key_column": {}, "reference_key_columns": {}, "upsert_columns": {}},
+		requiredAtCreate: nil,
 	},
 	"market_opportunity_analysis": {
-		create: map[string]struct{}{"aggregate": {}, "locations": {}, "name": {}, "outcome_id": {}, "persona_id": {}, "persona_set_id": {}, "scope_id": {}},
-		update: map[string]struct{}{"aggregate": {}, "locations": {}, "name": {}, "outcome_id": {}, "persona_id": {}, "persona_set_id": {}, "scope_id": {}},
+		create:           map[string]struct{}{"aggregate": {}, "locations": {}, "name": {}, "outcome_id": {}, "persona_id": {}, "persona_set_id": {}, "scope_id": {}},
+		update:           map[string]struct{}{"aggregate": {}, "locations": {}, "name": {}, "outcome_id": {}, "persona_id": {}, "persona_set_id": {}, "scope_id": {}},
+		requiredAtCreate: nil,
 	},
 	"outcome": {
-		create: map[string]struct{}{"attainment_cohort_id": {}, "attrition_cohort_id": {}, "bias_mitigation": {}, "eligible_cohort_id": {}, "feature_blocklist": {}, "name": {}, "prediction_mode": {}, "predictors": {}, "preview": {}},
-		update: map[string]struct{}{"attainment_cohort_id": {}, "attrition_cohort_id": {}, "bias_mitigation": {}, "eligible_cohort_id": {}, "feature_blocklist": {}, "name": {}, "prediction_mode": {}, "predictors": {}, "preview": {}},
+		create:           map[string]struct{}{"attainment_cohort_id": {}, "attrition_cohort_id": {}, "bias_mitigation": {}, "eligible_cohort_id": {}, "feature_blocklist": {}, "name": {}, "prediction_mode": {}, "predictors": {}, "preview": {}},
+		update:           map[string]struct{}{"attainment_cohort_id": {}, "attrition_cohort_id": {}, "bias_mitigation": {}, "eligible_cohort_id": {}, "feature_blocklist": {}, "name": {}, "prediction_mode": {}, "predictors": {}, "preview": {}},
+		requiredAtCreate: nil,
 	},
 	"persona_set": {
-		create: map[string]struct{}{"clustering_dimensions": {}, "cohort_id": {}, "explore": {}, "modeling_attributes": {}, "modeling_field_max_observation_date": {}, "modeling_fields": {}, "name": {}, "number_of_clusters": {}, "preview": {}},
-		update: map[string]struct{}{"clustering_dimensions": {}, "explore": {}, "modeling_field_max_observation_date": {}, "name": {}, "number_of_clusters": {}, "preview": {}},
+		create:           map[string]struct{}{"clustering_dimensions": {}, "cohort_id": {}, "explore": {}, "modeling_attributes": {}, "modeling_field_max_observation_date": {}, "modeling_fields": {}, "name": {}, "number_of_clusters": {}, "preview": {}},
+		update:           map[string]struct{}{"clustering_dimensions": {}, "explore": {}, "modeling_field_max_observation_date": {}, "name": {}, "number_of_clusters": {}, "preview": {}},
+		requiredAtCreate: nil,
 	},
 	"place": {
-		create: map[string]struct{}{"addresses": {}, "geojson": {}, "name": {}},
-		update: map[string]struct{}{"addresses": {}, "geojson": {}, "name": {}},
+		create:           map[string]struct{}{"addresses": {}, "geojson": {}, "name": {}},
+		update:           map[string]struct{}{"addresses": {}, "geojson": {}, "name": {}},
+		requiredAtCreate: nil,
 	},
 	"recommender": {
-		create: map[string]struct{}{"name": {}, "predictors": {}, "preview": {}, "stream_name": {}, "stream_property_name": {}},
-		update: map[string]struct{}{"name": {}, "predictors": {}, "preview": {}, "stream_name": {}, "stream_property_name": {}},
+		create:           map[string]struct{}{"name": {}, "predictors": {}, "preview": {}, "stream_name": {}, "stream_property_name": {}},
+		update:           map[string]struct{}{"name": {}, "predictors": {}, "preview": {}, "stream_name": {}, "stream_property_name": {}},
+		requiredAtCreate: nil,
 	},
 	"scope": {
-		create: map[string]struct{}{"name": {}, "payload": {}, "population": {}, "preview": {}},
-		update: map[string]struct{}{"name": {}, "payload": {}, "population": {}, "preview": {}},
+		create:           map[string]struct{}{"name": {}, "payload": {}, "population": {}, "preview": {}},
+		update:           map[string]struct{}{"name": {}, "payload": {}, "population": {}, "preview": {}},
+		requiredAtCreate: nil,
 	},
 	"stream": {
-		create: map[string]struct{}{"category": {}, "deprecated": {}, "deprecation_notes": {}, "description": {}, "literate": {}, "properties": {}, "tier": {}},
-		update: map[string]struct{}{"category": {}, "deprecated": {}, "deprecation_notes": {}, "description": {}, "literate": {}, "properties": {}, "tier": {}},
+		create:           map[string]struct{}{"category": {}, "deprecated": {}, "deprecation_notes": {}, "description": {}, "literate": {}, "properties": {}, "tier": {}},
+		update:           map[string]struct{}{"category": {}, "deprecated": {}, "deprecation_notes": {}, "description": {}, "literate": {}, "properties": {}, "tier": {}},
+		requiredAtCreate: nil,
 	},
 	"target": {
-		create: map[string]struct{}{"analysis_config": {}, "connection_id": {}, "custom_structure": {}, "filter": {}, "human_readable": {}, "limit": {}, "name": {}, "options": {}, "representation": {}, "scope_id": {}},
-		update: map[string]struct{}{"analysis_config": {}, "connection_id": {}, "custom_structure": {}, "filter": {}, "human_readable": {}, "limit": {}, "name": {}, "options": {}, "payload_map": {}, "representation": {}},
+		create:           map[string]struct{}{"analysis_config": {}, "connection_id": {}, "custom_structure": {}, "filter": {}, "human_readable": {}, "limit": {}, "name": {}, "options": {}, "representation": {}, "scope_id": {}},
+		update:           map[string]struct{}{"analysis_config": {}, "connection_id": {}, "custom_structure": {}, "filter": {}, "human_readable": {}, "limit": {}, "name": {}, "options": {}, "payload_map": {}, "representation": {}},
+		requiredAtCreate: []requiredSecret{{"options", "iterable", "api_key"}},
 	},
 	"trait": {
-		create: map[string]struct{}{"description": {}, "literate": {}, "lookup_table": {}, "name": {}, "statistical_type": {}, "unit": {}},
-		update: map[string]struct{}{"description": {}, "literate": {}, "lookup_table": {}, "statistical_type": {}, "unit": {}},
+		create:           map[string]struct{}{"description": {}, "literate": {}, "lookup_table": {}, "name": {}, "statistical_type": {}, "unit": {}},
+		update:           map[string]struct{}{"description": {}, "literate": {}, "lookup_table": {}, "statistical_type": {}, "unit": {}},
+		requiredAtCreate: nil,
 	},
 }

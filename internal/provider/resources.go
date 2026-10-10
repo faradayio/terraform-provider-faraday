@@ -184,6 +184,24 @@ func (r *genericResource) itemPath(raw tftypes.Value) (string, error) {
 	return r.def.collection + "/" + id, nil
 }
 
+// ModifyPlan refuses a planned create that leaves out a secret the API
+// requires, so the mistake fails `terraform plan` rather than the POST. Only a
+// create: an imported or existing resource never has its secrets in state.
+func (r *genericResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {
+	if !req.State.Raw.IsNull() || req.Plan.Raw.IsNull() {
+		return
+	}
+	for _, secret := range resourcePerms[r.def.name].requiredAtCreate {
+		if secret.isMissingFrom(req.Config.Raw) {
+			resp.Diagnostics.AddAttributeError(
+				secret.attributePath(),
+				"Missing required secret",
+				fmt.Sprintf("Faraday requires %s to create the resource. It stays optional for imports, because the API never returns it.", secret.attributePath()),
+			)
+		}
+	}
+}
+
 func (r *genericResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	s := r.def.schemaFn(ctx)
 	body, diags := writableJSON(ctx, r.def.name, forCreate, s, req.Plan.Raw)
