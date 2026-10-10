@@ -8,10 +8,11 @@ resource "faraday_connection" "hosted" {
 resource "faraday_dataset" "orders" {
   name          = "orders"
   connection_id = faraday_connection.hosted.id
-  options = jsonencode({
-    type             = "hosted_csv"
-    upload_directory = "orders"
-  })
+  options = {
+    hosted_csv = {
+      upload_directory = "orders"
+    }
+  }
   identity_sets = {
     primary = {
       email             = "email"

@@ -11,15 +11,19 @@ type unionAttr struct {
 // each variant is an optional nested attribute keyed by its tag value and
 // the marshaller collapses it onto the flat wire object.
 //
-// Keyed by resource first. Connection, atlas and target all have an
-// `options` union and their variant lists differ, so a name-keyed map
-// silently decodes two of them with the third's variants.
+// Keyed by resource first. Atlas, connection, dataset and target all
+// have an `options` union and their variant lists differ, so a
+// name-keyed map silently decodes three of them with the fourth's
+// variants.
 var unionAttrs = map[string]map[string]unionAttr{
 	"atlas": {
 		"options": {discriminator: "type", variants: []string{"athena", "aws_aurora_mysql", "aws_aurora_postgres", "aws_rds_mysql", "aws_rds_postgres", "aws_rds_sql_server", "aws_redshift_serverless", "azure_sql_server", "bigquery", "clickhouse", "databricks", "databricks_delta_sharing", "faraday_pixel", "gcp_cloud_sql_mysql", "gcp_cloud_sql_postgres", "gcp_cloud_sql_sql_server", "gcp_gcs_csv", "hosted_csv", "motherduck", "mysql", "postgres", "redshift", "s3_csv", "sftp", "snowflake", "sql_server"}},
 	},
 	"connection": {
 		"options": {discriminator: "type", variants: []string{"athena", "aws_aurora_mysql", "aws_aurora_postgres", "aws_rds_mysql", "aws_rds_postgres", "aws_rds_sql_server", "aws_redshift_serverless", "azure_sql_server", "bigquery", "classic", "clickhouse", "databricks", "databricks_delta_sharing", "facebook_custom_audiences", "faraday_pixel", "gcp_cloud_sql_mysql", "gcp_cloud_sql_postgres", "gcp_cloud_sql_sql_server", "gcp_gcs_csv", "google_ads", "hosted_csv", "hubspot", "iterable", "klaviyo", "linkedin_ads", "lookup_api", "merge", "motherduck", "mysql", "pinterest_ads", "poplar", "postgres", "recharge", "redshift", "s3_csv", "salesforce", "salesforce_marketing_cloud", "segment", "sftp", "shopify", "snowflake", "sql_server", "stripe", "the_trade_desk", "tiktok"}},
+	},
+	"dataset": {
+		"options": {discriminator: "type", variants: []string{"athena", "aws_aurora_mysql", "aws_aurora_postgres", "aws_rds_mysql", "aws_rds_postgres", "aws_rds_sql_server", "aws_redshift_serverless", "azure_sql_server", "bigquery", "classic", "clickhouse", "databricks", "databricks_delta_sharing", "faraday_pixel", "gcp_cloud_sql_mysql", "gcp_cloud_sql_postgres", "gcp_cloud_sql_sql_server", "gcp_gcs_csv", "hosted_csv", "hubspot", "iterable", "klaviyo", "merge", "motherduck", "mysql", "postgres", "recharge", "redshift", "s3_csv", "salesforce", "salesforce_marketing_cloud", "sftp", "shopify", "snowflake", "sql_server", "stripe"}},
 	},
 	"target": {
 		"limit":          {discriminator: "method", variants: []string{"row_count", "percentile"}},

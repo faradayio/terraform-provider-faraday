@@ -49,8 +49,8 @@ func apiFieldName(name string) string {
 // declared attribute gets a value (null when absent) and unknown JSON keys are
 // ignored. That is what guarantees nothing is left unknown after apply.
 // `resource` scopes the union and JSON-encoding lookups. Both are per
-// (resource, attribute): `options` is a union on connection, atlas and target
-// with a DIFFERENT variant list on each, and a plain JSON string on dataset.
+// (resource, attribute): `options` is a union on atlas, connection, dataset and
+// target with a DIFFERENT variant list on each.
 func jsonToTf(t tftypes.Type, v any, resource string) (tftypes.Value, error) {
 	if v == nil {
 		return tftypes.NewValue(t, nil), nil
@@ -287,8 +287,8 @@ const secretPlaceholder = "<secret>"
 // later be mistaken for a value.
 //
 // This walks the whole response rather than consulting a list of secret
-// attributes, because today every credential sits inside `options`, which the
-// schema carries as an opaque JSON string -- there is no attribute to key on.
+// attributes, because the credentials sit inside `options` variants, at paths
+// that differ per variant.
 func reconcileSecrets(res, prior any) any {
 	switch v := res.(type) {
 	case string:

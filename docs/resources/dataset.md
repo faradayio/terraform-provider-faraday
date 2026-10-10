@@ -23,10 +23,11 @@ resource "faraday_connection" "hosted" {
 resource "faraday_dataset" "orders" {
   name          = "orders"
   connection_id = faraday_connection.hosted.id
-  options = jsonencode({
-    type             = "hosted_csv"
-    upload_directory = "orders"
-  })
+  options = {
+    hosted_csv = {
+      upload_directory = "orders"
+    }
+  }
   identity_sets = {
     primary = {
       email             = "email"
@@ -44,7 +45,7 @@ resource "faraday_dataset" "orders" {
 
 - `identity_sets` (Attributes Map) A mapping of {identity set name} (ex. shipping) -> {identity set object}. Describes all the logical groupings of personally-identifiable information present in the dataset. Identity set objects map canonical names to dataset column names. The following keys are supported: * `email` * `email_hash` * `email_hash_base64` * `phone` * `phone_hash_base64` * `person_full_name` * `person_last_name` * `person_first_name` * `person_date_of_birth_postcode_hash_base64` * `house_number_and_street` * `city` * `state` * `postcode` * `freeform_address` * `date_of_birth` All keys must correspond to a single column name except `house_number_and_street` which must be an array of column names. Key names can contain letters (a-z, A-Z), numbers (0-9), or underscores (_), and must start with a letter or underscore. (see [below for nested schema](#nestedatt--identity_sets))
 - `name` (String) An identifying name for this dataset.
-- `options` (String) Dataset connection options Free-form; supply JSON via jsonencode().
+- `options` (Attributes) Dataset connection options (see [below for nested schema](#nestedatt--options))
 
 ### Optional
 
@@ -106,6 +107,355 @@ Optional:
 - `phone_hash_base64` (String) Base64-encoded SHA-256 hash of the phone number's last ten digits, with all non-digit characters removed first. Available only to accounts enabled for phone-only matching.
 - `postcode` (String)
 - `state` (String)
+
+
+<a id="nestedatt--options"></a>
+### Nested Schema for `options`
+
+Optional:
+
+- `athena` (Attributes) (see [below for nested schema](#nestedatt--options--athena))
+- `aws_aurora_mysql` (Attributes) (see [below for nested schema](#nestedatt--options--aws_aurora_mysql))
+- `aws_aurora_postgres` (Attributes) (see [below for nested schema](#nestedatt--options--aws_aurora_postgres))
+- `aws_rds_mysql` (Attributes) (see [below for nested schema](#nestedatt--options--aws_rds_mysql))
+- `aws_rds_postgres` (Attributes) (see [below for nested schema](#nestedatt--options--aws_rds_postgres))
+- `aws_rds_sql_server` (Attributes) (see [below for nested schema](#nestedatt--options--aws_rds_sql_server))
+- `aws_redshift_serverless` (Attributes) (see [below for nested schema](#nestedatt--options--aws_redshift_serverless))
+- `azure_sql_server` (Attributes) (see [below for nested schema](#nestedatt--options--azure_sql_server))
+- `bigquery` (Attributes) (see [below for nested schema](#nestedatt--options--bigquery))
+- `classic` (Attributes) (see [below for nested schema](#nestedatt--options--classic))
+- `clickhouse` (Attributes) (see [below for nested schema](#nestedatt--options--clickhouse))
+- `databricks` (Attributes) (see [below for nested schema](#nestedatt--options--databricks))
+- `databricks_delta_sharing` (Attributes) (see [below for nested schema](#nestedatt--options--databricks_delta_sharing))
+- `faraday_pixel` (Attributes) (see [below for nested schema](#nestedatt--options--faraday_pixel))
+- `gcp_cloud_sql_mysql` (Attributes) (see [below for nested schema](#nestedatt--options--gcp_cloud_sql_mysql))
+- `gcp_cloud_sql_postgres` (Attributes) (see [below for nested schema](#nestedatt--options--gcp_cloud_sql_postgres))
+- `gcp_cloud_sql_sql_server` (Attributes) (see [below for nested schema](#nestedatt--options--gcp_cloud_sql_sql_server))
+- `gcp_gcs_csv` (Attributes) (see [below for nested schema](#nestedatt--options--gcp_gcs_csv))
+- `hosted_csv` (Attributes) (see [below for nested schema](#nestedatt--options--hosted_csv))
+- `hubspot` (Attributes) (see [below for nested schema](#nestedatt--options--hubspot))
+- `iterable` (Attributes) (see [below for nested schema](#nestedatt--options--iterable))
+- `klaviyo` (Attributes) (see [below for nested schema](#nestedatt--options--klaviyo))
+- `merge` (Attributes) (see [below for nested schema](#nestedatt--options--merge))
+- `motherduck` (Attributes) (see [below for nested schema](#nestedatt--options--motherduck))
+- `mysql` (Attributes) (see [below for nested schema](#nestedatt--options--mysql))
+- `postgres` (Attributes) (see [below for nested schema](#nestedatt--options--postgres))
+- `recharge` (Attributes) (see [below for nested schema](#nestedatt--options--recharge))
+- `redshift` (Attributes) (see [below for nested schema](#nestedatt--options--redshift))
+- `s3_csv` (Attributes) (see [below for nested schema](#nestedatt--options--s3_csv))
+- `salesforce` (Attributes) (see [below for nested schema](#nestedatt--options--salesforce))
+- `salesforce_marketing_cloud` (Attributes) (see [below for nested schema](#nestedatt--options--salesforce_marketing_cloud))
+- `sftp` (Attributes) (see [below for nested schema](#nestedatt--options--sftp))
+- `shopify` (Attributes) (see [below for nested schema](#nestedatt--options--shopify))
+- `snowflake` (Attributes) (see [below for nested schema](#nestedatt--options--snowflake))
+- `sql_server` (Attributes) (see [below for nested schema](#nestedatt--options--sql_server))
+- `stripe` (Attributes) (see [below for nested schema](#nestedatt--options--stripe))
+
+<a id="nestedatt--options--athena"></a>
+### Nested Schema for `options.athena`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--aws_aurora_mysql"></a>
+### Nested Schema for `options.aws_aurora_mysql`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--aws_aurora_postgres"></a>
+### Nested Schema for `options.aws_aurora_postgres`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--aws_rds_mysql"></a>
+### Nested Schema for `options.aws_rds_mysql`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--aws_rds_postgres"></a>
+### Nested Schema for `options.aws_rds_postgres`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--aws_rds_sql_server"></a>
+### Nested Schema for `options.aws_rds_sql_server`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--aws_redshift_serverless"></a>
+### Nested Schema for `options.aws_redshift_serverless`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--azure_sql_server"></a>
+### Nested Schema for `options.azure_sql_server`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--bigquery"></a>
+### Nested Schema for `options.bigquery`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--classic"></a>
+### Nested Schema for `options.classic`
+
+
+<a id="nestedatt--options--clickhouse"></a>
+### Nested Schema for `options.clickhouse`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--databricks"></a>
+### Nested Schema for `options.databricks`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--databricks_delta_sharing"></a>
+### Nested Schema for `options.databricks_delta_sharing`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--faraday_pixel"></a>
+### Nested Schema for `options.faraday_pixel`
+
+Read-Only:
+
+- `site_id` (String) Identifies this dataset's pixel. Faraday generates it when the dataset is created. Visitors are added to the dataset when the pixel tag on your site sets this site_id.
+
+
+<a id="nestedatt--options--gcp_cloud_sql_mysql"></a>
+### Nested Schema for `options.gcp_cloud_sql_mysql`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--gcp_cloud_sql_postgres"></a>
+### Nested Schema for `options.gcp_cloud_sql_postgres`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--gcp_cloud_sql_sql_server"></a>
+### Nested Schema for `options.gcp_cloud_sql_sql_server`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--gcp_gcs_csv"></a>
+### Nested Schema for `options.gcp_gcs_csv`
+
+Required:
+
+- `prefix` (String) The prefix inside the bucket. May optionally include full filename, file globs (not regexp), and stftime date parsing formatting (which will override blob storage's native timestamps). For example, orders/, orders/file.csv, orders/*.csv, or orders/files-%Y-%m-%d.csv
+
+Optional:
+
+- `delimiter` (String) Provide the delimiter character, such as `,` or `|`. Defaults to `,`. For tab-delimited files, paste a tab character or use `\t`.
+- `encrypted` (Boolean) Whether the files you uploaded are encrypted with Faraday's public key.
+- `header_row` (String) A row of column headers. The delimiter must be the same as the `delimiter` parameter and match the data. If not provided, the first row of the CSV file will be used as the headers.
+- `replace_all_with_latest_file` (Boolean) Defaults to false, which means all files are merged into the dataset. If set to true, every time the dataset is ingested, delete all previous data and replace it with only the data in the latest file. This setting only guarantees that previous data is deleted and older files are not processed; however this process may run more than once. Therefore you cannot use this functionality to ensure "exactly once' delivery of a downstream target.
+
+
+<a id="nestedatt--options--hosted_csv"></a>
+### Nested Schema for `options.hosted_csv`
+
+Required:
+
+- `upload_directory` (String) Subdirectory of uploads where files are stored and retrieved. A directory is dedicated to one or more files which ought to have the same shape and contents. One or more datasets can pull from that folder (and in different ways) and push to one or more event streams. So if you have two different types of orders from two different POS/ecommerce systems, you would put them each in separate folders. Then you would create two different datasets that would both point to an `orders` stream.
+
+Optional:
+
+- `delimiter` (String) Provide the delimiter character, such as `,` or `|`. Defaults to `,`. For tab-delimited files, paste a tab character or use `\t`.
+- `encrypted` (Boolean) Whether the files you uploaded are encrypted with Faraday's public key.
+- `header_row` (String) A row of column headers. The delimiter must be the same as the `delimiter` parameter and match the data. If not provided, the first row of the CSV file will be used as the headers.
+- `replace_all_with_latest_file` (Boolean) Defaults to false, which means all files are merged into the dataset. If set to true, every time the dataset is ingested, delete all previous data and replace it with only the data in the latest file. This setting only guarantees that previous data is deleted and older files are not processed; however this process may run more than once. Therefore you cannot use this functionality to ensure "exactly once' delivery of a downstream target.
+
+
+<a id="nestedatt--options--hubspot"></a>
+### Nested Schema for `options.hubspot`
+
+
+<a id="nestedatt--options--iterable"></a>
+### Nested Schema for `options.iterable`
+
+
+<a id="nestedatt--options--klaviyo"></a>
+### Nested Schema for `options.klaviyo`
+
+
+<a id="nestedatt--options--merge"></a>
+### Nested Schema for `options.merge`
+
+Required:
+
+- `merge` (Attributes List) Which datasets should be merged, and what is the join column (see [below for nested schema](#nestedatt--options--merge--merge))
+
+Optional:
+
+- `migrate` (Boolean) If true, automatically move identity_sets, output_to_streams, and output_to_traits from input source tables to the merge dataset.
+
+<a id="nestedatt--options--merge--merge"></a>
+### Nested Schema for `options.merge.merge`
+
+Required:
+
+- `dataset_id` (String) The id of the dataset to merge
+- `join_column` (String) Which column should be used to merge this dataset with the other datasets
+
+
+
+<a id="nestedatt--options--motherduck"></a>
+### Nested Schema for `options.motherduck`
+
+Required:
+
+- `table_name` (String) Table name
+
+Optional:
+
+- `schema` (String) MotherDuck schema name. Defaults to 'main' if not provided.
+
+
+<a id="nestedatt--options--mysql"></a>
+### Nested Schema for `options.mysql`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--postgres"></a>
+### Nested Schema for `options.postgres`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--recharge"></a>
+### Nested Schema for `options.recharge`
+
+
+<a id="nestedatt--options--redshift"></a>
+### Nested Schema for `options.redshift`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--s3_csv"></a>
+### Nested Schema for `options.s3_csv`
+
+Required:
+
+- `prefix` (String) The prefix inside the bucket. May optionally include full filename, file globs (not regexp), and stftime date parsing formatting (which will override blob storage's native timestamps). For example, orders/, orders/file.csv, orders/*.csv, or orders/files-%Y-%m-%d.csv
+
+Optional:
+
+- `delimiter` (String) Provide the delimiter character, such as `,` or `|`. Defaults to `,`. For tab-delimited files, paste a tab character or use `\t`.
+- `encrypted` (Boolean) Whether the files you uploaded are encrypted with Faraday's public key.
+- `header_row` (String) A row of column headers. The delimiter must be the same as the `delimiter` parameter and match the data. If not provided, the first row of the CSV file will be used as the headers.
+- `replace_all_with_latest_file` (Boolean) Defaults to false, which means all files are merged into the dataset. If set to true, every time the dataset is ingested, delete all previous data and replace it with only the data in the latest file. This setting only guarantees that previous data is deleted and older files are not processed; however this process may run more than once. Therefore you cannot use this functionality to ensure "exactly once' delivery of a downstream target.
+
+
+<a id="nestedatt--options--salesforce"></a>
+### Nested Schema for `options.salesforce`
+
+
+<a id="nestedatt--options--salesforce_marketing_cloud"></a>
+### Nested Schema for `options.salesforce_marketing_cloud`
+
+Required:
+
+- `tenant_subdomain` (String) The auto-generated ID unique to your Salesforce Marketing Cloud account. Refer to <a href="https://www.stitchdata.com/docs/integrations/saas/salesforce-marketing-cloud#retrieve-tenant-subdomain">the Stitch docs</a>.
+
+
+<a id="nestedatt--options--sftp"></a>
+### Nested Schema for `options.sftp`
+
+Required:
+
+- `prefix` (String) The path to the data inside the server. May optionally include full filename, file globs (not regexp), and stftime date parsing formatting. For example, orders/, orders/file.csv, orders/*.csv, or orders/files-%Y-%m-%d.csv
+
+Optional:
+
+- `delimiter` (String) Provide the delimiter character, such as `,` or `|`. Defaults to `,`. For tab-delimited files, paste a tab character or use `\t`.
+- `encrypted` (Boolean) Whether the files you uploaded are encrypted with Faraday's public key.
+- `header_row` (String) A row of column headers. The delimiter must be the same as the `delimiter` parameter and match the data. If not provided, the first row of the CSV file will be used as the headers.
+- `replace_all_with_latest_file` (Boolean) Defaults to false, which means all files are merged into the dataset. If set to true, every time the dataset is ingested, delete all previous data and replace it with only the data in the latest file. This setting only guarantees that previous data is deleted and older files are not processed; however this process may run more than once. Therefore you cannot use this functionality to ensure "exactly once' delivery of a downstream target.
+
+
+<a id="nestedatt--options--shopify"></a>
+### Nested Schema for `options.shopify`
+
+
+<a id="nestedatt--options--snowflake"></a>
+### Nested Schema for `options.snowflake`
+
+Required:
+
+- `table_name` (String) Table name
+
+Optional:
+
+- `case_sensitive_columns` (Boolean) If the table was created with case sensitive columns, this setting may be required.
+- `schema` (String) Snowflake schema name. If not provided, it may be provided at the connection level, or omitted entirely.
+
+
+<a id="nestedatt--options--sql_server"></a>
+### Nested Schema for `options.sql_server`
+
+Required:
+
+- `table_name` (String) Table name
+
+
+<a id="nestedatt--options--stripe"></a>
+### Nested Schema for `options.stripe`
+
 
 
 <a id="nestedatt--identity_providers"></a>

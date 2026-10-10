@@ -6,11 +6,10 @@ package provider
 // Terraform carries them as JSON strings, so the marshaller encodes and
 // decodes them at the wire boundary.
 //
-// Keyed by resource first. `options` is a JSON string on dataset and an
-// expanded union everywhere else, so a name-keyed map would encode every
-// resource's options as a string.
+// Keyed by resource first, so one resource's free-form attribute never
+// makes another resource's attribute of the same name a string.
 var jsonEncodedAttrs = map[string]map[string]struct{}{
-	"dataset":     {"options": {}, "properties": {}, "sample": {}, "transformation_table": {}},
+	"dataset":     {"properties": {}, "sample": {}, "transformation_table": {}},
 	"persona_set": {"bins": {}, "center": {}, "streams": {}},
 	"place":       {"geojson": {}},
 	"stream":      {"interpretation_map": {}},

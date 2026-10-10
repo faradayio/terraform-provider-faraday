@@ -23,19 +23,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-go/tftypes"
 
-	"github.com/faradayio/terraform-provider-faraday/internal/resources/atlas"
-	"github.com/faradayio/terraform-provider-faraday/internal/resources/cohort"
-	"github.com/faradayio/terraform-provider-faraday/internal/resources/connection"
-	"github.com/faradayio/terraform-provider-faraday/internal/resources/dataset"
-	"github.com/faradayio/terraform-provider-faraday/internal/resources/market_opportunity_analysis"
-	"github.com/faradayio/terraform-provider-faraday/internal/resources/outcome"
-	"github.com/faradayio/terraform-provider-faraday/internal/resources/persona_set"
-	"github.com/faradayio/terraform-provider-faraday/internal/resources/place"
-	"github.com/faradayio/terraform-provider-faraday/internal/resources/recommender"
-	"github.com/faradayio/terraform-provider-faraday/internal/resources/scope"
-	"github.com/faradayio/terraform-provider-faraday/internal/resources/stream"
-	"github.com/faradayio/terraform-provider-faraday/internal/resources/target"
-	"github.com/faradayio/terraform-provider-faraday/internal/resources/trait"
+	"github.com/faradayio/terraform-provider-faraday/internal/schemas"
 )
 
 type resourceDef struct {
@@ -70,24 +58,24 @@ func isArchived(apiObject map[string]any) bool {
 // as code, they would need to come back -- and that missing endpoint becomes a
 // real gap rather than a happy coincidence.
 var resourceDefs = []resourceDef{
-	{name: "atlas", collection: "/atlases", schemaFn: atlas.AtlasResourceSchema},
-	{name: "cohort", collection: "/cohorts", schemaFn: cohort.CohortResourceSchema},
-	{name: "connection", collection: "/connections", schemaFn: connection.ConnectionResourceSchema},
-	{name: "dataset", collection: "/datasets", schemaFn: dataset.DatasetResourceSchema},
+	{name: "atlas", collection: "/atlases", schemaFn: schemas.AtlasResourceSchema},
+	{name: "cohort", collection: "/cohorts", schemaFn: schemas.CohortResourceSchema},
+	{name: "connection", collection: "/connections", schemaFn: schemas.ConnectionResourceSchema},
+	{name: "dataset", collection: "/datasets", schemaFn: schemas.DatasetResourceSchema},
 	{
 		name:       "market_opportunity_analysis",
 		collection: "/market_opportunity_analyses",
-		schemaFn:   market_opportunity_analysis.MarketOpportunityAnalysisResourceSchema,
+		schemaFn:   schemas.MarketOpportunityAnalysisResourceSchema,
 	},
-	{name: "outcome", collection: "/outcomes", schemaFn: outcome.OutcomeResourceSchema},
-	{name: "persona_set", collection: "/persona_sets", schemaFn: persona_set.PersonaSetResourceSchema},
-	{name: "place", collection: "/places", schemaFn: place.PlaceResourceSchema},
-	{name: "recommender", collection: "/recommenders", schemaFn: recommender.RecommenderResourceSchema},
-	{name: "scope", collection: "/scopes", schemaFn: scope.ScopeResourceSchema},
+	{name: "outcome", collection: "/outcomes", schemaFn: schemas.OutcomeResourceSchema},
+	{name: "persona_set", collection: "/persona_sets", schemaFn: schemas.PersonaSetResourceSchema},
+	{name: "place", collection: "/places", schemaFn: schemas.PlaceResourceSchema},
+	{name: "recommender", collection: "/recommenders", schemaFn: schemas.RecommenderResourceSchema},
+	{name: "scope", collection: "/scopes", schemaFn: schemas.ScopeResourceSchema},
 	{
 		name:       "stream",
 		collection: "/streams",
-		schemaFn:   stream.StreamResourceSchema,
+		schemaFn:   schemas.StreamResourceSchema,
 		// The one irregular resource in the API: streams are created by name on
 		// the item path, not by POSTing the collection.
 		createPath: func(plan tftypes.Value) (string, error) {
@@ -101,11 +89,11 @@ var resourceDefs = []resourceDef{
 			return "/streams/" + name, nil
 		},
 	},
-	{name: "target", collection: "/targets", schemaFn: target.TargetResourceSchema},
+	{name: "target", collection: "/targets", schemaFn: schemas.TargetResourceSchema},
 	{
 		name:       "trait",
 		collection: "/traits",
-		schemaFn:   trait.TraitResourceSchema,
+		schemaFn:   schemas.TraitResourceSchema,
 		providedByFaraday: func(apiObject map[string]any) bool {
 			name, _ := apiObject["name"].(string)
 			return strings.HasPrefix(name, "fig/")

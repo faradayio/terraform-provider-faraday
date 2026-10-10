@@ -161,6 +161,7 @@ func TestEachCredentialIsIndividuallySensitive(t *testing.T) {
 		want     int // x-secret members across all variants of `options`
 	}{
 		{"connection", 30},
+		{"dataset", 0},
 		{"target", 3},
 	} {
 		s := resourceSchema(t, tc.resource)
@@ -174,24 +175,5 @@ func TestEachCredentialIsIndividuallySensitive(t *testing.T) {
 		if got := countSensitive(s.Attributes); got != tc.want {
 			t.Errorf("%s: %d Sensitive attributes, want %d", tc.resource, got, tc.want)
 		}
-	}
-}
-
-func TestDatasetOptionsStaysJSONAndHoldsNoSecrets(t *testing.T) {
-	// The one union still collapsed to a JSON string, because
-	// DatasetOptionsMerge is tagged `type: merge` AND contains a member named
-	// `merge`, so both want the Go type MergeValue in one package. That costs
-	// nothing in secrecy terms -- no Dataset option is x-secret -- and this
-	// pins that, so expanding it later is a choice rather than a fire.
-	s := resourceSchema(t, "dataset")
-	options, ok := s.Attributes["options"]
-	if !ok {
-		t.Fatal("dataset has no options attribute")
-	}
-	if _, isString := options.(schema.StringAttribute); !isString {
-		t.Error("dataset.options expanded; drop it from UNION_AS_JSON and update this test")
-	}
-	if got := countSensitive(s.Attributes); got != 0 {
-		t.Errorf("dataset grew %d Sensitive attributes; its options are no longer secret-free", got)
 	}
 }

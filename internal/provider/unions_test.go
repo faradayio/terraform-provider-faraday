@@ -204,3 +204,48 @@ func TestTagOnlyVariantRoundTripsAsAnEmptyObject(t *testing.T) {
 		t.Errorf("tag-only variant gained fields on the way out: %v", got)
 	}
 }
+
+func TestVariantWithAMemberOfTheSameNameRoundTrips(t *testing.T) {
+	// A merge dataset's options are tagged `type: merge` and carry a member
+	// also named `merge`, so the variant attribute and its member share a name
+	// one level apart. The member must survive both directions as the list it
+	// is, and not be confused with the variant that holds it.
+	ctx := context.Background()
+	s := resourceSchema(t, "dataset")
+	resourceType := s.Type().TerraformType(ctx).(tftypes.Object)
+	wire := map[string]any{
+		"type": "merge",
+		"merge": []any{
+			map[string]any{"dataset_id": "11111111-1111-1111-1111-111111111111", "join_column": "email"},
+		},
+	}
+
+	raw, err := jsonToTf(resourceType, map[string]any{"name": "merged", "options": wire}, "dataset")
+	if err != nil {
+		t.Fatalf("decoding the merge variant: %v", err)
+	}
+	var top map[string]tftypes.Value
+	if err := raw.As(&top); err != nil {
+		t.Fatal(err)
+	}
+	body, _ := tfToJSON(top["options"])
+	collapsed, err := collapseUnion(unionAttrs["dataset"]["options"], body)
+	if err != nil {
+		t.Fatalf("collapsing the merge variant: %v", err)
+	}
+	got, ok := collapsed.(map[string]any)
+	if !ok {
+		t.Fatalf("collapsed to %T, want an object", collapsed)
+	}
+	if got["type"] != "merge" {
+		t.Errorf("type = %v, want merge", got["type"])
+	}
+	members, ok := got["merge"].([]any)
+	if !ok || len(members) != 1 {
+		t.Fatalf("merge = %#v, want one dataset to merge", got["merge"])
+	}
+	member, _ := members[0].(map[string]any)
+	if member["dataset_id"] != "11111111-1111-1111-1111-111111111111" || member["join_column"] != "email" {
+		t.Errorf("merge[0] = %v, want the dataset and join column it came in with", member)
+	}
+}

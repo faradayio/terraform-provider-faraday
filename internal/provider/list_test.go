@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/identityschema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 
-	"github.com/faradayio/terraform-provider-faraday/internal/resources/cohort"
+	"github.com/faradayio/terraform-provider-faraday/internal/schemas"
 )
 
 func TestListSkipsArchivedAndHonorsLimit(t *testing.T) {
@@ -32,7 +32,7 @@ func TestListSkipsArchivedAndHonorsLimit(t *testing.T) {
 	defer srv.Close()
 
 	listed := &genericListResource{
-		def: resourceDef{name: "cohort", collection: "/cohorts", schemaFn: cohort.CohortResourceSchema},
+		def: resourceDef{name: "cohort", collection: "/cohorts", schemaFn: schemas.CohortResourceSchema},
 		client: &client{
 			apiKey:  "test-key",
 			baseURL: srv.URL,
@@ -42,7 +42,7 @@ func TestListSkipsArchivedAndHonorsLimit(t *testing.T) {
 	req := list.ListRequest{
 		IncludeResource: false,
 		Limit:           1,
-		ResourceSchema:  cohort.CohortResourceSchema(context.Background()),
+		ResourceSchema:  schemas.CohortResourceSchema(context.Background()),
 		ResourceIdentitySchema: identityschema.Schema{
 			Attributes: map[string]identityschema.Attribute{
 				"id": identityschema.StringAttribute{RequiredForImport: true},
