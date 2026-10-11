@@ -632,10 +632,15 @@ func ConnectionResourceSchema(ctx context.Context) schema.Schema {
 								Description:         "Database",
 								MarkdownDescription: "Database",
 							},
+							"gcp_service_account_email": schema.StringAttribute{
+								Computed:            true,
+								Description:         "Google Cloud service account Faraday generated for this connection. Grant this account the Cloud SQL Client role on the project that holds your instance, then force-update the connection. Unique per Faraday Cloud SQL connection.",
+								MarkdownDescription: "Google Cloud service account Faraday generated for this connection. Grant this account the Cloud SQL Client role on the project that holds your instance, then force-update the connection. Unique per Faraday Cloud SQL connection.",
+							},
 							"instance_connection_name": schema.StringAttribute{
 								Required:            true,
-								Description:         "For use with Cloud SQL proxy. Client must enable Cloud SQL Admin API and give IAM role \"Cloud SQL Client\" to our service account faraday-incoming@production-237317.iam.gserviceaccount.com (Datasets) or faraday-outgoing@production-237317.iam.gserviceaccount.com (Targets).",
-								MarkdownDescription: "For use with Cloud SQL proxy. Client must enable Cloud SQL Admin API and give IAM role \"Cloud SQL Client\" to our service account faraday-incoming@production-237317.iam.gserviceaccount.com (Datasets) or faraday-outgoing@production-237317.iam.gserviceaccount.com (Targets).",
+								Description:         "Instance connection name, in the form PROJECT:REGION:INSTANCE. Enable the Cloud SQL Admin API in PROJECT and grant this connection's gcp_service_account_email the Cloud SQL Client role there.",
+								MarkdownDescription: "Instance connection name, in the form PROJECT:REGION:INSTANCE. Enable the Cloud SQL Admin API in PROJECT and grant this connection's gcp_service_account_email the Cloud SQL Client role there.",
 							},
 							"password": schema.StringAttribute{
 								Optional:            true,
@@ -659,10 +664,15 @@ func ConnectionResourceSchema(ctx context.Context) schema.Schema {
 								Description:         "Database",
 								MarkdownDescription: "Database",
 							},
+							"gcp_service_account_email": schema.StringAttribute{
+								Computed:            true,
+								Description:         "Google Cloud service account Faraday generated for this connection. Grant this account the Cloud SQL Client role on the project that holds your instance, then force-update the connection. Unique per Faraday Cloud SQL connection.",
+								MarkdownDescription: "Google Cloud service account Faraday generated for this connection. Grant this account the Cloud SQL Client role on the project that holds your instance, then force-update the connection. Unique per Faraday Cloud SQL connection.",
+							},
 							"instance_connection_name": schema.StringAttribute{
 								Required:            true,
-								Description:         "For use with Cloud SQL proxy. Client must enable Cloud SQL Admin API and give IAM role \"Cloud SQL Client\" to our service account faraday-incoming@production-237317.iam.gserviceaccount.com (Datasets) or faraday-outgoing@production-237317.iam.gserviceaccount.com (Targets).",
-								MarkdownDescription: "For use with Cloud SQL proxy. Client must enable Cloud SQL Admin API and give IAM role \"Cloud SQL Client\" to our service account faraday-incoming@production-237317.iam.gserviceaccount.com (Datasets) or faraday-outgoing@production-237317.iam.gserviceaccount.com (Targets).",
+								Description:         "Instance connection name, in the form PROJECT:REGION:INSTANCE. Enable the Cloud SQL Admin API in PROJECT and grant this connection's gcp_service_account_email the Cloud SQL Client role there.",
+								MarkdownDescription: "Instance connection name, in the form PROJECT:REGION:INSTANCE. Enable the Cloud SQL Admin API in PROJECT and grant this connection's gcp_service_account_email the Cloud SQL Client role there.",
 							},
 							"password": schema.StringAttribute{
 								Optional:            true,
@@ -691,10 +701,15 @@ func ConnectionResourceSchema(ctx context.Context) schema.Schema {
 								Description:         "Database",
 								MarkdownDescription: "Database",
 							},
+							"gcp_service_account_email": schema.StringAttribute{
+								Computed:            true,
+								Description:         "Google Cloud service account Faraday generated for this connection. Grant this account the Cloud SQL Client role on the project that holds your instance, then force-update the connection. Unique per Faraday Cloud SQL connection.",
+								MarkdownDescription: "Google Cloud service account Faraday generated for this connection. Grant this account the Cloud SQL Client role on the project that holds your instance, then force-update the connection. Unique per Faraday Cloud SQL connection.",
+							},
 							"instance_connection_name": schema.StringAttribute{
 								Required:            true,
-								Description:         "For use with Cloud SQL proxy. Client must enable Cloud SQL Admin API and give IAM role \"Cloud SQL Client\" to our service account faraday-incoming@production-237317.iam.gserviceaccount.com (Datasets) or faraday-outgoing@production-237317.iam.gserviceaccount.com (Targets).",
-								MarkdownDescription: "For use with Cloud SQL proxy. Client must enable Cloud SQL Admin API and give IAM role \"Cloud SQL Client\" to our service account faraday-incoming@production-237317.iam.gserviceaccount.com (Datasets) or faraday-outgoing@production-237317.iam.gserviceaccount.com (Targets).",
+								Description:         "Instance connection name, in the form PROJECT:REGION:INSTANCE. Enable the Cloud SQL Admin API in PROJECT and grant this connection's gcp_service_account_email the Cloud SQL Client role there.",
+								MarkdownDescription: "Instance connection name, in the form PROJECT:REGION:INSTANCE. Enable the Cloud SQL Admin API in PROJECT and grant this connection's gcp_service_account_email the Cloud SQL Client role there.",
 							},
 							"load_balancer": schema.StringAttribute{
 								Optional:            true,

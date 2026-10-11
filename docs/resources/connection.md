@@ -334,12 +334,16 @@ Optional:
 Required:
 
 - `database` (String) Database
-- `instance_connection_name` (String) For use with Cloud SQL proxy. Client must enable Cloud SQL Admin API and give IAM role "Cloud SQL Client" to our service account faraday-incoming@production-237317.iam.gserviceaccount.com (Datasets) or faraday-outgoing@production-237317.iam.gserviceaccount.com (Targets).
+- `instance_connection_name` (String) Instance connection name, in the form PROJECT:REGION:INSTANCE. Enable the Cloud SQL Admin API in PROJECT and grant this connection's gcp_service_account_email the Cloud SQL Client role there.
 - `user` (String) User
 
 Optional:
 
 - `password` (String, Sensitive) Password
+
+Read-Only:
+
+- `gcp_service_account_email` (String) Google Cloud service account Faraday generated for this connection. Grant this account the Cloud SQL Client role on the project that holds your instance, then force-update the connection. Unique per Faraday Cloud SQL connection.
 
 
 <a id="nestedatt--options--gcp_cloud_sql_postgres"></a>
@@ -348,13 +352,17 @@ Optional:
 Required:
 
 - `database` (String) Database
-- `instance_connection_name` (String) For use with Cloud SQL proxy. Client must enable Cloud SQL Admin API and give IAM role "Cloud SQL Client" to our service account faraday-incoming@production-237317.iam.gserviceaccount.com (Datasets) or faraday-outgoing@production-237317.iam.gserviceaccount.com (Targets).
+- `instance_connection_name` (String) Instance connection name, in the form PROJECT:REGION:INSTANCE. Enable the Cloud SQL Admin API in PROJECT and grant this connection's gcp_service_account_email the Cloud SQL Client role there.
 - `schema` (String) Schema
 - `user` (String) User
 
 Optional:
 
 - `password` (String, Sensitive) Password
+
+Read-Only:
+
+- `gcp_service_account_email` (String) Google Cloud service account Faraday generated for this connection. Grant this account the Cloud SQL Client role on the project that holds your instance, then force-update the connection. Unique per Faraday Cloud SQL connection.
 
 
 <a id="nestedatt--options--gcp_cloud_sql_sql_server"></a>
@@ -363,7 +371,7 @@ Optional:
 Required:
 
 - `database` (String) Database
-- `instance_connection_name` (String) For use with Cloud SQL proxy. Client must enable Cloud SQL Admin API and give IAM role "Cloud SQL Client" to our service account faraday-incoming@production-237317.iam.gserviceaccount.com (Datasets) or faraday-outgoing@production-237317.iam.gserviceaccount.com (Targets).
+- `instance_connection_name` (String) Instance connection name, in the form PROJECT:REGION:INSTANCE. Enable the Cloud SQL Admin API in PROJECT and grant this connection's gcp_service_account_email the Cloud SQL Client role there.
 - `user` (String) User
 
 Optional:
@@ -372,6 +380,10 @@ Optional:
 - `password` (String, Sensitive) Password
 - `schema` (String) Schema
 - `ssh_bastion` (String) In case the host is deployed behind an SSH bastion / jump server. Uses the Faraday SSH public key. This is the address of the bastion including username. For example, faraday@mybastion.example.com
+
+Read-Only:
+
+- `gcp_service_account_email` (String) Google Cloud service account Faraday generated for this connection. Grant this account the Cloud SQL Client role on the project that holds your instance, then force-update the connection. Unique per Faraday Cloud SQL connection.
 
 
 <a id="nestedatt--options--gcp_gcs_csv"></a>

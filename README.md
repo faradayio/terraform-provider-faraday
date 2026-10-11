@@ -9,7 +9,7 @@ terraform {
   required_providers {
     faraday = {
       source  = "faradayio/faraday"
-      version = "0.1.0"
+      version = "0.1.1"
     }
   }
 }
