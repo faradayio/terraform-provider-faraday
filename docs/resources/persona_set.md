@@ -35,10 +35,10 @@ resource "faraday_persona_set" "personas" {
 ### Optional
 
 - `clustering_dimensions` (Attributes) The dimensions the clustering system should consider when discovering the personas in a persona set. By default, Faraday will consider a fixed set of broadly effective dimensions when discovering your personas. Advanced users can override our recommendation and specify their own. Note that the system may consider additional dimensions you do not list in order to improve performance. Each group is independent and any combination may be provided. The groups available to an account depend on whether it has an identity graph feature store set. This supersedes the deprecated `modeling_fields`, `modeling_attributes`, and `modeling_field_max_observation_date` inputs. If both `clustering_dimensions` and any of those deprecated inputs are supplied on the same request, `clustering_dimensions` takes precedence and the deprecated inputs are ignored. Changing this on an existing persona set triggers a complete rebuild of the persona set. (see [below for nested schema](#nestedatt--clustering_dimensions))
-- `explore` (Boolean) Whether to show the persona set in Explore, the map view on https://app.faraday.ai. This will slow down persona set builds.
-- `modeling_attributes` (List of String) Deprecated. Use `clustering_dimensions` instead. Specify Faraday provided attributes to use in modeling. Only available to accounts with an identity graph feature store set. Mutually exclusive with `modeling_fields`. Changing this on an existing persona set triggers a complete rebuild of the persona set.
-- `modeling_field_max_observation_date` (String) Deprecated. Use `clustering_dimensions.attribute_max_observation_date` instead. The maximum date for FIG attribute observations used in modeling fields. When set, only attribute data observed on or before this date will be used. If not set, the freshest available data is used. If `clustering_dimensions.attribute_max_observation_date` is also supplied, it takes precedence over this field.
-- `modeling_fields` (List of String) Deprecated. Use `clustering_dimensions` instead. Specify Faraday provided traits to use in modeling. Only valid on accounts that do not have an identity graph feature store set, which must use modeling_attributes instead. Mutually exclusive with `modeling_attributes`. Changing this on an existing persona set triggers a complete rebuild of the persona set.
+- `explore` (Boolean, Deprecated) Deprecated. This field has no effect. Faraday keeps the value only for backward compatibility.
+- `modeling_attributes` (List of String, Deprecated) Deprecated. Use `clustering_dimensions` instead. Specify Faraday provided attributes to use in modeling. Only available to accounts with an identity graph feature store set. Mutually exclusive with `modeling_fields`. Changing this on an existing persona set triggers a complete rebuild of the persona set.
+- `modeling_field_max_observation_date` (String, Deprecated) Deprecated. Use `clustering_dimensions.attribute_max_observation_date` instead. The maximum date for FIG attribute observations used in modeling fields. When set, only attribute data observed on or before this date will be used. If not set, the freshest available data is used. If `clustering_dimensions.attribute_max_observation_date` is also supplied, it takes precedence over this field.
+- `modeling_fields` (List of String, Deprecated) Deprecated. Use `clustering_dimensions` instead. Specify Faraday provided traits to use in modeling. Only valid on accounts that do not have an identity graph feature store set, which must use modeling_attributes instead. Mutually exclusive with `modeling_attributes`. Changing this on an existing persona set triggers a complete rebuild of the persona set.
 - `number_of_clusters` (Number) Specify the exact number of clusters (i.e. personas) there should be in the persona set. By default, the optimal value for this parameter is determined automatically. Setting this requires external knowledge and should only be done when the use-case necessitates a specific number of clusters.
 - `preview` (Boolean) A persona set in preview mode will not build until preview is turned off.
 
@@ -78,7 +78,7 @@ Required:
 
 Read-Only:
 
-- `avatar` (String) **Deprecated**: Value will be null until the key is eventually removed or replaced. Previously, an image used to represent this persona (only available if demographics (age and gender) are included in the model)
+- `avatar` (String, Deprecated) **Deprecated**: Value will be null until the key is eventually removed or replaced. Previously, an image used to represent this persona (only available if demographics (age and gender) are included in the model)
 - `details` (Attributes) Statistics about the members of this persona. (see [below for nested schema](#nestedatt--personas--details))
 - `id` (String)
 - `individuals_count` (Number) The number of individuals in this persona among members of the cohort used to generate the persona set who are matched at the individual level. Members matched only at the address level aren't used to build personas.
@@ -89,7 +89,7 @@ Read-Only:
 
 Read-Only:
 
-- `bins` (String) **Deprecated**: Use `/persona_sets/{persona_set_id}/analysis/dimensions` instead. How much the members of the persona differ from an average member. This is represented as a histogram. For example, if the average member is 38 years old, this will show how many members are 0-20 years old, 20-30, 30-40, and so on. Free-form; supply JSON via jsonencode().
+- `bins` (String, Deprecated) **Deprecated**: Use `/persona_sets/{persona_set_id}/analysis/dimensions` instead. How much the members of the persona differ from an average member. This is represented as a histogram. For example, if the average member is 38 years old, this will show how many members are 0-20 years old, 20-30, 30-40, and so on. Free-form; supply JSON via jsonencode().
 - `center` (String) The average traits of a member of this persona. A person does not need to match these traits exactly to be a member of the persona. Free-form; supply JSON via jsonencode().
 
 

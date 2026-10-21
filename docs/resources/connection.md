@@ -468,6 +468,7 @@ Required:
 
 Optional:
 
+- `region` (String) AWS region your MotherDuck organization runs in. Find it with `SELECT region FROM md_user_info();`. Defaults to us-east-1.
 - `token` (String, Sensitive) Access token from MotherDuck Settings. Used to authenticate with MotherDuck.
 
 

@@ -91,8 +91,8 @@ resource "faraday_dataset" "orders" {
 
 Optional:
 
-- `address_line_1` (String) Deprecated: use `house_number_and_street` instead
-- `address_line_2` (String) Deprecated: use `house_number_and_street` instead
+- `address_line_1` (String, Deprecated) Deprecated: use `house_number_and_street` instead
+- `address_line_2` (String, Deprecated) Deprecated: use `house_number_and_street` instead
 - `city` (String)
 - `email` (String)
 - `email_hash` (String) Lowercase hex-encoded SHA-256 hash of the lowercased email, with plus-addressing removed.
@@ -515,6 +515,10 @@ Required:
 
 - `column_name` (String) The name of a column in the dataset. If format is "static_date_iso8601", then the value provided in this field is used as a static value.
 
+Optional:
+
+- `format` (String) Additional context for the column's data that isn't captured by its data type. For example, a 'revenue' column's data type would likely be 'int64', but format specifies if this number represents 'dollars' or 'cents'. This can be left blank if no additional context is needed.
+
 
 <a id="nestedatt--output_to_streams--conditions"></a>
 ### Nested Schema for `output_to_streams.conditions`
@@ -559,6 +563,7 @@ Optional:
 Optional:
 
 - `column_name` (String) The name of a column in the dataset. Required if no `value` is used.
+- `format` (String) Additional context for the column's data that isn't captured by its data type. For example, a 'revenue' column's data type would likely be 'int64', but format specifies if this number represents 'dollars' or 'cents'. This can be left blank if no additional context is needed.
 - `null_values` (List of String) A list of values that should be treated as null.
 - `transformation_table` (String) A mapping of values as they appear in the dataset to how they should be used in models, where the key is what appears in the dataset and value is how it should be interpretted. This is used when multiple distinct values in the source table functionally represent the sme thing, or when combining traits from multiple datasets. Use '*' as the key to capture all values that have been excluded by all other conditions. Free-form; supply JSON via jsonencode().
 

@@ -138,12 +138,14 @@ func DatasetResourceSchema(ctx context.Context) schema.Schema {
 							Computed:            true,
 							Description:         "Deprecated: use `house_number_and_street` instead",
 							MarkdownDescription: "Deprecated: use `house_number_and_street` instead",
+							DeprecationMessage:  "This attribute is deprecated.",
 						},
 						"address_line_2": schema.StringAttribute{
 							Optional:            true,
 							Computed:            true,
 							Description:         "Deprecated: use `house_number_and_street` instead",
 							MarkdownDescription: "Deprecated: use `house_number_and_street` instead",
+							DeprecationMessage:  "This attribute is deprecated.",
 						},
 						"city": schema.StringAttribute{
 							Optional: true,
@@ -877,6 +879,12 @@ func DatasetResourceSchema(ctx context.Context) schema.Schema {
 										Description:         "The name of a column in the dataset. If format is \"static_date_iso8601\", then the value provided in this field is used as a static value.",
 										MarkdownDescription: "The name of a column in the dataset. If format is \"static_date_iso8601\", then the value provided in this field is used as a static value.",
 									},
+									"format": schema.StringAttribute{
+										Optional:            true,
+										Computed:            true,
+										Description:         "Additional context for the column's data that isn't captured by its data type. For example, a 'revenue' column's data type would likely be 'int64', but format specifies if this number represents 'dollars' or 'cents'. This can be left blank if no additional context is needed.",
+										MarkdownDescription: "Additional context for the column's data that isn't captured by its data type. For example, a 'revenue' column's data type would likely be 'int64', but format specifies if this number represents 'dollars' or 'cents'. This can be left blank if no additional context is needed.",
+									},
 								},
 							},
 							Required:            true,
@@ -925,6 +933,12 @@ func DatasetResourceSchema(ctx context.Context) schema.Schema {
 							Computed:            true,
 							Description:         "The name of a column in the dataset. Required if no `value` is used.",
 							MarkdownDescription: "The name of a column in the dataset. Required if no `value` is used.",
+						},
+						"format": schema.StringAttribute{
+							Optional:            true,
+							Computed:            true,
+							Description:         "Additional context for the column's data that isn't captured by its data type. For example, a 'revenue' column's data type would likely be 'int64', but format specifies if this number represents 'dollars' or 'cents'. This can be left blank if no additional context is needed.",
+							MarkdownDescription: "Additional context for the column's data that isn't captured by its data type. For example, a 'revenue' column's data type would likely be 'int64', but format specifies if this number represents 'dollars' or 'cents'. This can be left blank if no additional context is needed.",
 						},
 						"null_values": schema.ListAttribute{
 							ElementType:         types.StringType,

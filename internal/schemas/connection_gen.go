@@ -871,6 +871,12 @@ func ConnectionResourceSchema(ctx context.Context) schema.Schema {
 								Description:         "Database",
 								MarkdownDescription: "Database",
 							},
+							"region": schema.StringAttribute{
+								Optional:            true,
+								Computed:            true,
+								Description:         "AWS region your MotherDuck organization runs in. Find it with `SELECT region FROM md_user_info();`. Defaults to us-east-1.",
+								MarkdownDescription: "AWS region your MotherDuck organization runs in. Find it with `SELECT region FROM md_user_info();`. Defaults to us-east-1.",
+							},
 							"token": schema.StringAttribute{
 								Optional:            true,
 								Computed:            true,

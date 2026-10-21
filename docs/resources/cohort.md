@@ -29,13 +29,13 @@ resource "faraday_cohort" "customers" {
 ### Optional
 
 - `attributes` (Attributes List) List of attribute conditions to filter cohort membership. Only available if your account has an identity graph feature store set. Attribute conditions and trait conditions merge into one list. Required conditions (optional=false) AND together. Optional conditions (optional=true) OR together as a group. Both groups AND-ed for final membership. (see [below for nested schema](#nestedatt--attributes))
-- `explore` (Boolean) Whether to show the Cohort in Explore, the map view on https://app.faraday.ai. This will slow down Cohort builds.
+- `explore` (Boolean, Deprecated) Deprecated. This field has no effect. Faraday keeps the value only for backward compatibility.
 - `location_conditions` (Attributes List) List of atlas locations to use to spatially filter Cohort membership. A cohort may not set both `location_conditions` and `place_conditions`. (see [below for nested schema](#nestedatt--location_conditions))
 - `max_count` (Number) Max count for this cohort's config
 - `max_value` (Number) Max value for this cohort's config
 - `min_count` (Number) Min count for this cohort's config
 - `min_value` (Number) Min value for this cohort's config
-- `place_conditions` (Attributes List) List of places to use to spatially filter Cohort membership. Superseded by `location_conditions`, which filters on the locations of an atlas. A cohort may not set both. (see [below for nested schema](#nestedatt--place_conditions))
+- `place_conditions` (Attributes List, Deprecated) List of places to use to spatially filter Cohort membership. Superseded by `location_conditions`, which filters on the locations of an atlas. A cohort may not set both. (see [below for nested schema](#nestedatt--place_conditions))
 - `recency` (Attributes) Basing cohort on recency of event (see [below for nested schema](#nestedatt--recency))
 - `stream_conditions` (Attributes List) List of stream properties to filter cohort membership on. The stream properties must be for the same stream set as the cohort `stream_name`. Nulls are excluded unless explicitly requested with `_null: true`. (see [below for nested schema](#nestedatt--stream_conditions))
 - `stream_name` (String) The `name` field of the stream from which to build this cohort.
@@ -51,8 +51,8 @@ resource "faraday_cohort" "customers" {
 - `last_updated_config_at` (String) The last time this resource's configuration was updated. If this is more recent than last_updated_output_at, the resource will be rebuilt.
 - `last_updated_output_at` (String) The last time this resource successfully built.
 - `metrics` (Attributes) (see [below for nested schema](#nestedatt--metrics))
-- `population_count` (Number) Count of unique individuals.
-- `residence_count` (Number) Count of unique residences.
+- `population_count` (Number, Deprecated) Count of unique individuals.
+- `residence_count` (Number, Deprecated) Count of unique residences.
 - `resource_type` (String) The type of this resource.
 - `status` (String) The current state of this resource and any updates.
 - `status_changed_at` (String) When the status of this resource was last updated.

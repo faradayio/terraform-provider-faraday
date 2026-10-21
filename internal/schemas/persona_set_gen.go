@@ -75,8 +75,9 @@ func PersonaSetResourceSchema(ctx context.Context) schema.Schema {
 			"explore": schema.BoolAttribute{
 				Optional:            true,
 				Computed:            true,
-				Description:         "Whether to show the persona set in Explore, the map view on https://app.faraday.ai. This will slow down persona set builds.",
-				MarkdownDescription: "Whether to show the persona set in Explore, the map view on https://app.faraday.ai. This will slow down persona set builds.",
+				Description:         "Deprecated. This field has no effect. Faraday keeps the value only for backward compatibility.",
+				MarkdownDescription: "Deprecated. This field has no effect. Faraday keeps the value only for backward compatibility.",
+				DeprecationMessage:  "This attribute is deprecated.",
 				Default:             booldefault.StaticBool(false),
 			},
 			"id": schema.StringAttribute{
@@ -108,6 +109,7 @@ func PersonaSetResourceSchema(ctx context.Context) schema.Schema {
 				Computed:            true,
 				Description:         "Deprecated. Use `clustering_dimensions` instead. Specify Faraday provided attributes to use in modeling. Only available to accounts with an identity graph feature store set. Mutually exclusive with `modeling_fields`. Changing this on an existing persona set triggers a complete rebuild of the persona set.",
 				MarkdownDescription: "Deprecated. Use `clustering_dimensions` instead. Specify Faraday provided attributes to use in modeling. Only available to accounts with an identity graph feature store set. Mutually exclusive with `modeling_fields`. Changing this on an existing persona set triggers a complete rebuild of the persona set.",
+				DeprecationMessage:  "This attribute is deprecated.",
 				PlanModifiers: []planmodifier.List{
 					listplanmodifier.RequiresReplace(),
 				},
@@ -117,6 +119,7 @@ func PersonaSetResourceSchema(ctx context.Context) schema.Schema {
 				Computed:            true,
 				Description:         "Deprecated. Use `clustering_dimensions.attribute_max_observation_date` instead. The maximum date for FIG attribute observations used in modeling fields. When set, only attribute data observed on or before this date will be used. If not set, the freshest available data is used. If `clustering_dimensions.attribute_max_observation_date` is also supplied, it takes precedence over this field.",
 				MarkdownDescription: "Deprecated. Use `clustering_dimensions.attribute_max_observation_date` instead. The maximum date for FIG attribute observations used in modeling fields. When set, only attribute data observed on or before this date will be used. If not set, the freshest available data is used. If `clustering_dimensions.attribute_max_observation_date` is also supplied, it takes precedence over this field.",
+				DeprecationMessage:  "This attribute is deprecated.",
 			},
 			"modeling_fields": schema.ListAttribute{
 				ElementType:         types.StringType,
@@ -124,6 +127,7 @@ func PersonaSetResourceSchema(ctx context.Context) schema.Schema {
 				Computed:            true,
 				Description:         "Deprecated. Use `clustering_dimensions` instead. Specify Faraday provided traits to use in modeling. Only valid on accounts that do not have an identity graph feature store set, which must use modeling_attributes instead. Mutually exclusive with `modeling_attributes`. Changing this on an existing persona set triggers a complete rebuild of the persona set.",
 				MarkdownDescription: "Deprecated. Use `clustering_dimensions` instead. Specify Faraday provided traits to use in modeling. Only valid on accounts that do not have an identity graph feature store set, which must use modeling_attributes instead. Mutually exclusive with `modeling_attributes`. Changing this on an existing persona set triggers a complete rebuild of the persona set.",
+				DeprecationMessage:  "This attribute is deprecated.",
 				PlanModifiers: []planmodifier.List{
 					listplanmodifier.RequiresReplace(),
 				},
@@ -146,6 +150,7 @@ func PersonaSetResourceSchema(ctx context.Context) schema.Schema {
 							Computed:            true,
 							Description:         "**Deprecated**: Value will be null until the key is eventually removed or replaced. Previously, an image used to represent this persona (only available if demographics (age and gender) are included in the model)",
 							MarkdownDescription: "**Deprecated**: Value will be null until the key is eventually removed or replaced. Previously, an image used to represent this persona (only available if demographics (age and gender) are included in the model)",
+							DeprecationMessage:  "This attribute is deprecated.",
 						},
 						"details": schema.SingleNestedAttribute{
 							Attributes: map[string]schema.Attribute{
@@ -153,6 +158,7 @@ func PersonaSetResourceSchema(ctx context.Context) schema.Schema {
 									Computed:            true,
 									Description:         "**Deprecated**: Use `/persona_sets/{persona_set_id}/analysis/dimensions` instead. How much the members of the persona differ from an average member. This is represented as a histogram. For example, if the average member is 38 years old, this will show how many members are 0-20 years old, 20-30, 30-40, and so on. Free-form; supply JSON via jsonencode().",
 									MarkdownDescription: "**Deprecated**: Use `/persona_sets/{persona_set_id}/analysis/dimensions` instead. How much the members of the persona differ from an average member. This is represented as a histogram. For example, if the average member is 38 years old, this will show how many members are 0-20 years old, 20-30, 30-40, and so on. Free-form; supply JSON via jsonencode().",
+									DeprecationMessage:  "This attribute is deprecated.",
 								},
 								"center": schema.StringAttribute{
 									Computed:            true,

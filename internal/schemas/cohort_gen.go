@@ -115,8 +115,9 @@ func CohortResourceSchema(ctx context.Context) schema.Schema {
 			"explore": schema.BoolAttribute{
 				Optional:            true,
 				Computed:            true,
-				Description:         "Whether to show the Cohort in Explore, the map view on https://app.faraday.ai. This will slow down Cohort builds.",
-				MarkdownDescription: "Whether to show the Cohort in Explore, the map view on https://app.faraday.ai. This will slow down Cohort builds.",
+				Description:         "Deprecated. This field has no effect. Faraday keeps the value only for backward compatibility.",
+				MarkdownDescription: "Deprecated. This field has no effect. Faraday keeps the value only for backward compatibility.",
+				DeprecationMessage:  "This attribute is deprecated.",
 				Default:             booldefault.StaticBool(false),
 			},
 			"id": schema.StringAttribute{
@@ -355,11 +356,13 @@ func CohortResourceSchema(ctx context.Context) schema.Schema {
 				Computed:            true,
 				Description:         "List of places to use to spatially filter Cohort membership. Superseded by `location_conditions`, which filters on the locations of an atlas. A cohort may not set both.",
 				MarkdownDescription: "List of places to use to spatially filter Cohort membership. Superseded by `location_conditions`, which filters on the locations of an atlas. A cohort may not set both.",
+				DeprecationMessage:  "This attribute is deprecated.",
 			},
 			"population_count": schema.Int64Attribute{
 				Computed:            true,
 				Description:         "Count of unique individuals.",
 				MarkdownDescription: "Count of unique individuals.",
+				DeprecationMessage:  "This attribute is deprecated.",
 			},
 			"recency": schema.SingleNestedAttribute{
 				Attributes: map[string]schema.Attribute{
@@ -390,6 +393,7 @@ func CohortResourceSchema(ctx context.Context) schema.Schema {
 				Computed:            true,
 				Description:         "Count of unique residences.",
 				MarkdownDescription: "Count of unique residences.",
+				DeprecationMessage:  "This attribute is deprecated.",
 			},
 			"resource_type": schema.StringAttribute{
 				Computed:            true,
